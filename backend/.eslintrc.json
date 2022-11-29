@@ -43,7 +43,7 @@
     "@typescript-eslint/naming-convention": [
       "error", { 
         "selector": "property",
-        "format": ["strictCamelCase"],
+        "format": ["strictCamelCase", "StrictPascalCase"],
         "filter": {
         "regex": "^_",
         "match": false
