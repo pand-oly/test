@@ -5,8 +5,8 @@
   "scripts": {
     "preinstall": "./install_dependencies.sh",
     "prisma-migrate": "cd backend && npx prisma migrate",
-    "compoose-up": "docker-compose up -d --build",
-    "compoose-up:dev": "docker-compose -f docker-compose.dev.yml up -d --build"
+    "compose-up": "docker-compose up -d --build",
+    "compose-up:dev": "docker-compose -f docker-compose.dev.yml up -d --build"
   },
   "keywords": [],
   "author": "",

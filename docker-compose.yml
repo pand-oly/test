@@ -1,77 +1,45 @@
 version: '3.9'
 
 services:
-#  frontend:
-#    container_name: app_frontend
-#    build: ./frontend
-#    ports:
-#      - 3000:3000
-#    platform: linux/x86_64
-#    working_dir: /app-frontend
-#    depends_on:
-#      backend:
-#        condition: service_healthy
-#    healthcheck:
-#      test: ["CMD", "lsof", "-t", "-i:3000"]
-#      timeout: 10s
-#      retries: 5
-
   backend:
     container_name: app_backend
     build: ./backend
-    ports:
-      - 3001:3001
     platform: linux/x86_64
-    working_dir: /app-backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    volumes: 
+      - ./backend:/app-backend
     environment:
-      - APP-PORT=3001
-      - DB-USER=root
-      - DB-PASSWORD=password
-      - DB-HOST=db
-      - DB-PORT=5432
-      - JWT_SECRET=jwt_secret
+      DATABASE_URL : postgresql://user:password@db:5432/database?schema=public
+      APP_PORT: 3001
+      JWT_SECRET: jwt_secret
+    networks: 
+      - connect-app
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3001"]
       timeout: 10s
       retries: 5
-    networks:
-      - ng_network
-    volumes:
-      - ./backend:/app-backend
 
   db:
-    image: postgres
     container_name: db
-    working_dir: /app-db
     platform: linux/x86_64
+    image: postgres:latest
     ports:
       - 3002:5432
     environment:
-      - POSTGRES_PASSWORD=password
-    restart: 'always'
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
     volumes:
-      - ./postgres:/app-db
-    networks:
-      - ng_network
- #     - ng_db_network
-
-#  pgadmin:
-#    image: dpage/pgadmin4
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: pgadmin@ng.com
-#      PGADMIN_DEFAULT_PASSWORD: NG_admin
-#    restart: always
-#    ports:
-#      - 8080:80
-#    depends_on:
-#      - db
-#    networks:
-#      - ng_db_network
+      - ./postgres-data:/var/lib/postgresql/data
+    networks: 
+      - connect-app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      timeout: 10s
+      retries: 5
+    restart: always
 
 networks:
-  ng_network:
-#  ng_db_network:
-#    driver: bridge
-
+  connect-app:
