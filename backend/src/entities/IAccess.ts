@@ -1,4 +1,4 @@
-export default interface IRegister {
+export default interface IAccess {
   username: string;
   password: string;
 }
