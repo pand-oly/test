@@ -17,4 +17,5 @@
 
 ## Como fazer para rodar a aplicação:
 
-* Na raiz do projeto rode o comando `npm run preinstall`
+* Na raiz do projeto rode o comando `npm run prestart`.
+  - Aqui instala as dependencias de back-end e sobe os containers

@@ -1,11 +1,10 @@
 #!/bin/bash
 
-printf "\n> Instalando o back-end\n"
+printf "\n> Installing the backend\n"
 backFolder="./backend"
 cacheFolderBack="/tmp/backend-cache"
 rm -rf $cacheFolderBack
 npm_config_loglevel=silent npm i --prefix ${backFolder} --cache $cacheFolderBack
 
-npm run compoose-up
-
-npm run prisma-migrate
+printf "\n Lifting containers\n"
+npm run compose-up
