@@ -1,6 +1,7 @@
 export enum ErrorTypes {
   EntityNotFound = 'EntityNotFound',
   ErrorInDatabase = 'ErrorInDatabase',
+  NotUserFoundError = 'NotUserFoundError',
 }
 
 type ErrorResponseObject = {
@@ -18,5 +19,9 @@ export const errorCatalog: ErrorCatalog = {
   ErrorInDatabase: {
     error: 'Internal database error',
     httpStatus: 500,
+  },
+  NotUserFoundError: {
+    error: 'No User found error',
+    httpStatus: 404,
   },
 };
