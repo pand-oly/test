@@ -11,17 +11,12 @@ export default class RegisterService {
   ) {}
 
   async execute(data: IAccess) {
-    // console.log(data, 'service 2');
-    // hash senha
     const hash = this._passwordProvider.encrypt(data.password);
-    // console.log(data, 'service 3');
-    // registra no banco de dados
     const user = await this._registerUserRepository.create({
       password: hash, username: data.username,
     });
-    console.log(user);
-    return user;
     // gera um token
-    // const token = this._tokenGeneratorProvider.generator({});
+    const token = this._tokenGeneratorProvider.generator(user);
+    return token;
   }
 }
