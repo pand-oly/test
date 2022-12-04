@@ -15,7 +15,6 @@ export default class RegisterService {
     const user = await this._registerUserRepository.create({
       password: hash, username: data.username,
     });
-    // gera um token
     const token = this._tokenGeneratorProvider.generator(user);
     return token;
   }

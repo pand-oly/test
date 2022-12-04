@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import registerController from '../factories';
+import { registerController } from '../factories';
 
 const registerRoute = Router();
 

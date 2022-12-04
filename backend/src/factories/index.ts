@@ -1,5 +1,6 @@
+import LoginControllerFactory from './LoginControllerFactory';
 import RegisterControllerFactory from './RegisterControllerFactory';
 
-const registerController = RegisterControllerFactory.make();
+export const registerController = RegisterControllerFactory.make();
 
-export default registerController;
+export const loginController = LoginControllerFactory.make();
