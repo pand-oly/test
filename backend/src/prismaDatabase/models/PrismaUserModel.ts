@@ -2,15 +2,12 @@ import { PrismaClient } from '@prisma/client';
 import IAccess from '../../entities/IAccess';
 import IUser from '../../entities/IUser';
 import { ErrorTypes } from '../../errors/catalogErrors';
-import ILoginRepository from '../ILoginRepository';
-import IRegisterUserRepository from '../IRegisterUserRepository';
+import prismaConnection from './prismaConnection';
 
-const prisma = new PrismaClient();
-
-export default class PrismaUserRepository implements IRegisterUserRepository, ILoginRepository {
+export default class UserModel {
   private _prisma: PrismaClient;
   constructor() {
-    this._prisma = prisma;
+    this._prisma = prismaConnection;
   }
 
   public async create(obj: IAccess): Promise<IUser> {
