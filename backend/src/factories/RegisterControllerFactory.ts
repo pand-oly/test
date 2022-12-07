@@ -1,8 +1,10 @@
 import RegisterController from '../controllers/RegisterController';
 import PrismaUserModel from '../prismaDatabase/models/PrismaUserModel';
-import { jwtTokenProvider, md5PasswordProvider } from '../providers';
 import UserRepository from '../repositories/implementations/UserRepository';
 import RegisterService from '../services/RegisterService';
+import {
+  jwtTokenProvider, md5PasswordProvider, zodAccessValidatorProvider,
+} from '../providers';
 
 export default class RegisterControllerFactory {
   static make() {
@@ -12,6 +14,7 @@ export default class RegisterControllerFactory {
       md5PasswordProvider,
       registerUserRepository,
       jwtTokenProvider,
+      zodAccessValidatorProvider,
     );
     const registerController = new RegisterController(registerService);
 
