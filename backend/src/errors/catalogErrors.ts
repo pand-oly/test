@@ -2,6 +2,7 @@ export enum ErrorTypes {
   EntityNotFound = 'EntityNotFound',
   ErrorInDatabase = 'ErrorInDatabase',
   NotUserFoundError = 'NotUserFoundError',
+  Conflict = 'Conflict',
 }
 
 type ErrorResponseObject = {
@@ -23,5 +24,9 @@ export const errorCatalog: ErrorCatalog = {
   NotUserFoundError: {
     error: 'No User found error',
     httpStatus: 404,
+  },
+  Conflict: {
+    error: 'Conflic: username already in use',
+    httpStatus: 409,
   },
 };

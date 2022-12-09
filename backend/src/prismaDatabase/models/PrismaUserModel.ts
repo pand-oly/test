@@ -4,7 +4,7 @@ import IUser from '../../entities/IUser';
 import { ErrorTypes } from '../../errors/catalogErrors';
 import prismaConnection from './prismaConnection';
 
-export default class UserModel {
+export default class PrismaUserModel {
   private _prisma: PrismaClient;
   constructor() {
     this._prisma = prismaConnection;
@@ -26,7 +26,7 @@ export default class UserModel {
       return user;
     } catch (error) {
       console.log(error);
-      throw new Error(ErrorTypes.ErrorInDatabase);
+      throw new Error(ErrorTypes.Conflict);
     }
   }
 
