@@ -1,7 +1,7 @@
 import 'express-async-errors';
 import express from 'express';
 import errorHandler from './middleware/errorHandle';
-import { registerRoute, loginRoute } from './routes';
+import { registerRoute, loginRoute, transactionRoute } from './routes';
 
 class App {
   public app: express.Express;
@@ -12,6 +12,7 @@ class App {
 
     this.app.use(registerRoute);
     this.app.use(loginRoute);
+    this.app.use(transactionRoute);
 
     this.app.use(errorHandler);
   }

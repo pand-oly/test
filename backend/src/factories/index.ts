@@ -6,4 +6,4 @@ export const registerController = RegisterControllerFactory.make();
 
 export const loginController = LoginControllerFactory.make();
 
-export const transactionControllerFactory = TransactionControllerFactory.make();
+export const transactionController = TransactionControllerFactory.make();
