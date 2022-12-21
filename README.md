@@ -18,4 +18,19 @@
 ## Como fazer para rodar a aplicação:
 
 * Na raiz do projeto rode o comando `npm run prestart`.
-  - Aqui instala as dependencias de back-end e sobe os containers
+  - Aqui instala as dependencias de back-end e sobe os containers para uso
+
+## Requisições da Api / Database
+
+> - Confira a [documentação](http://localhost:3001/api-docs/) da api feita com `swagger` na rota `http://localhost:3001/api-docs/`
+**Obs.** Esta rota esta disponível somente com os containers rodando
+
+
+- Rota de registro
+> - `/register` _Responsavel pelo cadastro de novos usuários_
+
+- Rota de login
+> - `/login` _Responsavel pelo acesso de usuários e gerar um token_
+
+- Rota de transferencia de credito
+> - `/transaction` _Responsavel pela transação de credito entre usuarios do banco de dados_
