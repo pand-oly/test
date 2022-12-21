@@ -1,7 +1,7 @@
 {
-  "name": "ng_cash",
+  "name": "pig-banck",
   "version": "1.0.0",
-  "description": "NG.CASH technical challenge project",
+  "description": "Uma aplicação web fullstack, dockerizada, cujo objetivo seja possibilitar que usuários da NG consigam realizar transferências internas entre si.",
   "scripts": {
     "prestart": "./prestart_app.sh",
     "compose-up": "docker-compose up -d --build",
