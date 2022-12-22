@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import IAccess from '../../entities/IAccess';
-import IUser from '../../entities/IUser';
+import { IUserPayload } from '../../entities/IUser';
 import { ErrorTypes } from '../../errors/catalogErrors';
 import prismaConnection from './prismaConnection';
 
@@ -10,7 +10,7 @@ export default class PrismaUserModel {
     this._prisma = prismaConnection;
   }
 
-  public async create(obj: IAccess): Promise<IUser> {
+  public async create(obj: IAccess): Promise<IUserPayload> {
     try {
       const user = await this._prisma.users.create({
         data: {
@@ -22,6 +22,7 @@ export default class PrismaUserModel {
             },
           },
         },
+        select: { username: true, accountId: true },
       });
       return user;
     } catch (error) {
@@ -30,11 +31,15 @@ export default class PrismaUserModel {
     }
   }
 
-  public async findOne(obj: IAccess): Promise<IUser | null> {
+  public async findOne(obj: IAccess): Promise<IUserPayload | null> {
     const { username, password } = obj;
     try {
       const user = await this._prisma.users.findFirst({
         where: { username, password },
+        select: {
+          username: true,
+          accountId: true,
+        },
       });
       return user;
     } catch (error) {

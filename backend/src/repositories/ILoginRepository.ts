@@ -1,6 +1,6 @@
 import IAccess from '../entities/IAccess';
-import IUser from '../entities/IUser';
+import { IUserPayload } from '../entities/IUser';
 
 export default interface ILoginRepository {
-  findOne(obj: IAccess): Promise<IUser | null>
+  findOne(obj: IAccess): Promise<IUserPayload | null>
 }

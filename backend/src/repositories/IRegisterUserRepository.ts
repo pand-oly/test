@@ -1,6 +1,6 @@
 import IAccess from '../entities/IAccess';
-import IUser from '../entities/IUser';
+import { IUserPayload } from '../entities/IUser';
 
 export default interface IRegisterUserRepository {
-  create(obj: IAccess): Promise<IUser>
+  create(obj: IAccess): Promise<IUserPayload>
 }
