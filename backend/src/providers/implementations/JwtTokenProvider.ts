@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { IUserPayload } from '../../entities/IUser';
 import { ErrorTypes } from '../../errors/catalogErrors';
-import ITokenDecode from '../ITokenDecode';
+import ITokenVerify from '../ITokenVerify';
 import ITokenGenerator from '../ITokenGenerator';
 
-export default class JwtTokenProvider implements ITokenGenerator, ITokenDecode {
+export default class JwtTokenProvider implements ITokenGenerator, ITokenVerify {
   private _jwt;
   private _secret: string;
   private _singOptions: jwt.SignOptions;

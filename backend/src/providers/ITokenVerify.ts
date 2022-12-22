@@ -1,5 +1,5 @@
 import { IUserPayload } from '../entities/IUser';
 
-export default interface ITokenDecode {
+export default interface ITokenVerify {
   verifyToken(token: string | undefined): IUserPayload;
 }
