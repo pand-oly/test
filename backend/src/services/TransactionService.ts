@@ -1,6 +1,7 @@
 import { Decimal } from '@prisma/client/runtime';
 import ITransaction from '../entities/ITransaction';
 import { ErrorTypes } from '../errors/catalogErrors';
+import ITokenDecode from '../providers/ITokenDecode';
 import IAccountRepository from '../repositories/IAccountRepository';
 import ITransactionRepository from '../repositories/ITransactionRepository';
 
@@ -8,9 +9,12 @@ export default class TransactionService {
   constructor(
     private _accountRepositorie: IAccountRepository,
     private _transactionRepository: ITransactionRepository,
+    private _checkToken: ITokenDecode,
   ) { }
 
-  async execute(data: ITransaction): Promise<ITransaction> {
+  async execute(data: ITransaction, token: string | undefined): Promise<ITransaction> {
+    this._checkToken.verifyToken(token);
+
     const { debitedAccountId, value, creditedAccountId } = data;
 
     const accountCashOut = await this._accountRepositorie.findOne(debitedAccountId);
