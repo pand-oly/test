@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { IUserPayload } from '../../entities/IUser';
+import { ErrorTypes } from '../../errors/catalogErrors';
+import ITokenDecode from '../ITokenDecode';
 import ITokenGenerator from '../ITokenGenerator';
 
-export default class JwtTokenProvider implements ITokenGenerator {
+export default class JwtTokenProvider implements ITokenGenerator, ITokenDecode {
   private _jwt;
   private _secret: string;
   private _singOptions: jwt.SignOptions;
@@ -15,5 +17,17 @@ export default class JwtTokenProvider implements ITokenGenerator {
   public generator(payload: IUserPayload): string {
     const token = this._jwt.sign(payload, this._secret, this._singOptions);
     return token;
+  }
+
+  public verifyToken(token: string | undefined): IUserPayload {
+    if (!token) {
+      throw new Error(ErrorTypes.NotFoundToken);
+    }
+    try {
+      const result = this._jwt.verify(token, this._secret);
+      return result as IUserPayload;
+    } catch (error) {
+      throw new Error(ErrorTypes.JsonWebTokenError);
+    }
   }
 }

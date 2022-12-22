@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import TransferService from '../services/TransactionService';
 
 export default class TransactionController {
-  constructor(private _cashTransferService: TransferService) {}
+  constructor(private _transactionService: TransferService) {}
 
   async execute(req: Request, res: Response) {
-    const result = await this._cashTransferService.execute(req.body);
-    res.status(200).json(result);
+    const { authorization } = req.headers;
+    const result = await this._transactionService.execute(req.body, authorization);
+    return res.status(200).json(result);
   }
 }

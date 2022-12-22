@@ -4,6 +4,8 @@ export enum ErrorTypes {
   NotUserFoundError = 'NotUserFoundError',
   Conflict = 'Conflict',
   InsufficientCredit = 'InsufficientCredit',
+  NotFoundToken = 'NotFoundToken',
+  JsonWebTokenError = 'JsonWebTokenError',
 }
 
 type ErrorResponseObject = {
@@ -33,5 +35,13 @@ export const errorCatalog: ErrorCatalog = {
   InsufficientCredit: {
     error: 'Insufisiente Credit in your account',
     httpStatus: 401,
+  },
+  NotFoundToken: {
+    error: 'Valid token required',
+    httpStatus: 404,
+  },
+  JsonWebTokenError: {
+    error: 'Invalid token',
+    httpStatus: 400,
   },
 };
