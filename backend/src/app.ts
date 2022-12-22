@@ -1,7 +1,9 @@
 import 'express-async-errors';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import errorHandler from './middleware/errorHandle';
-import { registerRoute, loginRoute } from './routes';
+import { registerRoute, loginRoute, transactionRoute } from './routes';
+import swaggerDocs from './swagger.json';
 
 class App {
   public app: express.Express;
@@ -12,6 +14,7 @@ class App {
 
     this.app.use(registerRoute);
     this.app.use(loginRoute);
+    this.app.use(transactionRoute);
 
     this.app.use(errorHandler);
   }
@@ -25,6 +28,7 @@ class App {
     };
 
     this.app.use(express.json());
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     this.app.use(accessControl);
   }
 

@@ -15,7 +15,7 @@ model Users {
   password  String
   accountId Int    @unique
 
-  account Accounts @relation(fields: [accountId], references: [id])
+  account Accounts @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }
 
 model Accounts {
@@ -31,10 +31,11 @@ model Accounts {
 model Transactions {
   id Int @id @default(autoincrement())
 
-  debitedAccount    Accounts @relation("debitedAccountId", fields: [debitedAccountId], references: [id])
   debitedAccountId  Int
-  creditedAccount   Accounts @relation("creditedAccountId", fields: [creditedAccountId], references: [id])
   creditedAccountId Int
   value             Decimal
   createdAt         DateTime @default(now())
+
+  creditedAccount Accounts @relation("creditedAccountId", fields: [creditedAccountId], references: [id])
+  debitedAccount  Accounts @relation("debitedAccountId", fields: [debitedAccountId], references: [id])
 }

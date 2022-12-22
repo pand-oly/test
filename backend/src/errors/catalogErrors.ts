@@ -3,6 +3,7 @@ export enum ErrorTypes {
   ErrorInDatabase = 'ErrorInDatabase',
   NotUserFoundError = 'NotUserFoundError',
   Conflict = 'Conflict',
+  InsufficientCredit = 'InsufficientCredit',
 }
 
 type ErrorResponseObject = {
@@ -28,5 +29,9 @@ export const errorCatalog: ErrorCatalog = {
   Conflict: {
     error: 'Conflic: username already in use',
     httpStatus: 409,
+  },
+  InsufficientCredit: {
+    error: 'Insufisiente Credit in your account',
+    httpStatus: 401,
   },
 };
