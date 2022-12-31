@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,7 +14,7 @@ function Login() {
 
   return (
     <>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form>
         <fieldset>
           <legend>Username</legend>
@@ -35,13 +35,9 @@ function Login() {
         <button type="submit" onClick={handleSubmit}>
           Login
         </button>
-        <p>or</p>
-        <button type="button" onClick={() => navigate('/register')}>
-          Sing up
-        </button>
       </form>
     </>
   );
 }
 
-export default Login;
+export default Register;
