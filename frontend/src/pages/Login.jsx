@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { requestAccess } from '../utils/api';
 
-function Login() {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [alertErorr, setAlert] = useState('');
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    const login = await requestAccess('/login', { username, password });
+    if (!login.token) {
+      if (login.status === 400) return setAlert(login.data.message[0].message);
+      return setAlert(login.data.error);
+    }
+    return navigate('/home');
   };
 
   return (
@@ -32,6 +39,7 @@ function Login() {
             value={password}
           />
         </fieldset>
+        {alertErorr.length > 0 && <span>{alertErorr}</span>}
         <button type="submit" onClick={handleSubmit}>
           Login
         </button>
@@ -43,5 +51,3 @@ function Login() {
     </>
   );
 }
-
-export default Login;
