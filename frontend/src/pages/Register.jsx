@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { requestAccess } from '../utils/api';
 
-function Register() {
+export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [alertErorr, setAlert] = useState('');
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    const register = await requestAccess('/register', { username, password });
+    if (!register.token) {
+      if (register.status === 400)
+        return setAlert(register.data.message[0].message);
+      return setAlert(register.data.error);
+    }
+    return navigate('/home');
   };
 
   return (
@@ -32,6 +40,7 @@ function Register() {
             value={password}
           />
         </fieldset>
+        {alertErorr.length > 0 && <span>{alertErorr}</span>}
         <button type="submit" onClick={handleSubmit}>
           Login
         </button>
@@ -39,5 +48,3 @@ function Register() {
     </>
   );
 }
-
-export default Register;
