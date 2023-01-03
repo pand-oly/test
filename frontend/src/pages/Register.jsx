@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import MainContext from '../context/MainContext';
 import { requestAccess } from '../utils/api';
 
 export default function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [alertErorr, setAlert] = useState('');
+
+  const { setToken } = useContext(MainContext);
 
   const navigate = useNavigate();
 
@@ -17,6 +20,7 @@ export default function Register() {
         return setAlert(register.data.message[0].message);
       return setAlert(register.data.error);
     }
+    setToken(register.token);
     return navigate('/home');
   };
 

@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import MainContext from '../context/MainContext';
 import { requestAccess } from '../utils/api';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [alertErorr, setAlert] = useState('');
+
+  const { setToken } = useContext(MainContext);
 
   const navigate = useNavigate();
 
@@ -16,6 +19,7 @@ export default function Login() {
       if (login.status === 400) return setAlert(login.data.message[0].message);
       return setAlert(login.data.error);
     }
+    setToken(login.token);
     return navigate('/home');
   };
 
