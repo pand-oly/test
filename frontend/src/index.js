@@ -6,6 +6,7 @@ import MainProvider from './context/MainProvider';
 import reportWebVitals from './reportWebVitals';
 
 import './main.css';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -7,6 +7,9 @@ import {
   validatePassword,
 } from '../middleware/validateAccess';
 
+import '../styles/access.css';
+import pigBanck from '../public/icons/cofrinho.png';
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [inputUsername, setInputUsername] = useState(true);
@@ -42,46 +45,57 @@ export default function Login() {
   }, [password]);
 
   return (
-    <>
-      <h1 className="text-3xl">Login</h1>
-      <form>
-        <fieldset>
-          <legend>Username</legend>
-          <input
-            type="text"
-            name="username"
-            onChange={({ target }) => setUsername(target.value)}
-            value={username}
-            className={`input_access ${
-              inputUsername ? 'focus:border-blue-400' : 'focus:border-red-400'
-            }`}
-          />
-          <span className={inputUsername && 'invisible'}>
-            Username precisa ter no minimo 3 caracteres
-          </span>
-          <legend>Password</legend>
-          <input
-            type="password"
-            name="password"
-            onChange={({ target }) => setPassword(target.value)}
-            value={password}
-            className={`input_access ${
-              inputPassword ? 'focus:border-blue-400' : 'focus:border-red-400'
-            }`}
-          />
-          <span className={inputPassword && 'invisible'}>
-            A senha deve ter pelo menos um número e uma letra maiúscula
-          </span>
-        </fieldset>
-        {alertErorr.length > 0 && <span>{alertErorr}</span>}
-        <button type="submit" onClick={handleSubmit}>
-          Login
-        </button>
-        <p>or</p>
-        <button type="button" onClick={() => navigate('/register')}>
-          Sing up
-        </button>
-      </form>
-    </>
+    <section className="main_container_access">
+      <img src={pigBanck} alt="icon-pig-banck" className="icon_access" />
+      <div className="container_access">
+        <h1 className="title_access">Login</h1>
+        <form className="items-conter">
+          <fieldset className="container_access_fieldset">
+            <legend>Username</legend>
+            <input
+              type="text"
+              name="username"
+              onChange={({ target }) => setUsername(target.value)}
+              value={username}
+              className={`input_access ${
+                inputUsername ? 'focus:border-blue-400' : 'focus:border-red-400'
+              }`}
+            />
+            <span className={`${inputUsername && 'invisible'} span_input`}>
+              Username precisa ter no minimo 3 caracteres
+            </span>
+            <legend>Password</legend>
+            <input
+              type="password"
+              name="password"
+              onChange={({ target }) => setPassword(target.value)}
+              value={password}
+              className={`input_access ${
+                inputPassword ? 'focus:border-blue-400' : 'focus:border-red-400'
+              }`}
+            />
+            <span className={`${inputPassword && 'invisible'} span_input`}>
+              A senha deve ter pelo menos um número e uma letra maiúscula
+            </span>
+          </fieldset>
+          {alertErorr.length > 0 && <span>{alertErorr}</span>}
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="button_access bg-pink-500"
+          >
+            Login
+          </button>
+          <p>or</p>
+          <button
+            type="button"
+            onClick={() => navigate('/register')}
+            className="button_access bg-gray-500"
+          >
+            Sing up
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
