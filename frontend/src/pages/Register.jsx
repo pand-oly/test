@@ -8,7 +8,7 @@ import {
 } from '../middleware/validateAccess';
 
 import '../styles/access.css';
-import pigBanck from '../public/icons/cofrinho.png';
+import pigBank from '../public/icons/cofrinho.png';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -52,7 +52,7 @@ export default function Register() {
 
   return (
     <section className="main_container_access">
-      <img src={pigBanck} alt="icon-pig-banck" className="icon_access" />
+      <img src={pigBank} alt="icon-pig-bank" className="icon_access" />
       <div className="container_access">
         <h1 className="title_access">Register</h1>
         <form className="items-conter" onSubmit={handleSubmit}>
