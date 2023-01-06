@@ -1,0 +1,11 @@
+.btn-balance {
+  @apply bg-[#d90fff] w-20 h-7 p-1 border-0
+}
+
+.icon-header {
+  @apply w-10 h-10
+}
+
+.main-container-header {
+  @apply flex flex-row items-center space-x-52 bg-[#d9d9d9] h-10 p-0.5
+}
