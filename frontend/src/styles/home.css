@@ -1,0 +1,27 @@
+.btn-home {
+  @apply w-full text-base p-1 shadow-sm shadow-black
+}
+
+.btn-filter-history {
+  @apply items-end
+}
+
+.container-btn-home {
+  @apply mb-4 w-full
+}
+
+.container-filter-history {
+  @apply flex flex-row
+}
+
+.container-input-search {
+  @apply justify-items-start
+}
+
+.main-container-home {
+  @apply bg-[#d9d9d9] h-screen w-4/6 pt-5 px-3 flex flex-col
+}
+
+.title-history {
+  @apply border-b-4 border-black mb-2 p-1
+}
