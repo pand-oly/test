@@ -1,5 +1,5 @@
-import React from 'react';
+import { Header } from '../components';
 
 export default function Home() {
-  return <h1>Home</h1>;
+  return <Header />;
 }
