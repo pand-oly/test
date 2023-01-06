@@ -1,5 +1,10 @@
-import { Header } from '../components';
+import { Header, ContainerHome } from '../components';
 
 export default function Home() {
-  return <Header />;
+  return (
+    <div className="flex flex-col items-center">
+      <Header />
+      <ContainerHome />
+    </div>
+  );
 }
