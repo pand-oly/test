@@ -1,3 +1,5 @@
+import CardHistory from './CardHistory';
+
 import '../styles/home.css';
 
 export default function ContainerHome() {
@@ -21,7 +23,9 @@ export default function ContainerHome() {
             cash-out
           </button>
         </div>
-        <div>historico</div>
+        <div className="container-card-history">
+          <CardHistory />
+        </div>
       </div>
     </div>
   );

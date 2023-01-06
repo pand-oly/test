@@ -6,8 +6,16 @@
   @apply items-end
 }
 
+.card-history{
+  @apply bg-[#eee] p-3 space-y-2
+}
+
 .container-btn-home {
   @apply mb-4 w-full
+}
+
+.container-card-history {
+  @apply mt-5
 }
 
 .container-filter-history {
