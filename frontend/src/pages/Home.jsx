@@ -1,5 +1,10 @@
-import React from 'react';
+import { Header, ContainerHome } from '../components';
 
 export default function Home() {
-  return <h1>Home</h1>;
+  return (
+    <div className="flex flex-col items-center">
+      <Header />
+      <ContainerHome />
+    </div>
+  );
 }

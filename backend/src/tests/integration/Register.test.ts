@@ -29,6 +29,8 @@ describe('Test register routes', () => {
 
       expect(chaiHttpResponse).to.have.status(201);
       expect(chaiHttpResponse.body).to.have.property('token');
+      expect(chaiHttpResponse.body).to.have.property('username');
+      expect(chaiHttpResponse.body).to.have.property('accountId');
     });
   });
 

@@ -1,4 +1,4 @@
-import IAccess from '../entities/IAccess';
+import IAccess, { IReturnAccess } from '../entities/IAccess';
 import { ErrorTypes } from '../errors/catalogErrors';
 import IAccessValidatorProvider from '../providers/IAccessValidatorProvider';
 import IPasswordProvider from '../providers/IPasswordProvider';
@@ -13,7 +13,7 @@ export default class LoginService {
     private _accessValidatorProvider: IAccessValidatorProvider,
   ) {}
 
-  async execute(data: IAccess): Promise<string> {
+  async execute(data: IAccess): Promise<IReturnAccess> {
     await this._accessValidatorProvider.validator(data);
 
     const { username, password } = data;
@@ -25,6 +25,6 @@ export default class LoginService {
     }
 
     const token = this._tokenGeneratorProvider.generator(user);
-    return token;
+    return { token, username: user.username, accountId: user.accountId };
   }
 }

@@ -19,6 +19,6 @@ export default class RegisterService {
       password: hash, username: data.username,
     });
     const token = this._tokenGeneratorProvider.generator(user);
-    return token;
+    return { token, username: user.username, accountId: user.accountId };
   }
 }

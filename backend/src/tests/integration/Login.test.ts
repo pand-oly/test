@@ -26,9 +26,13 @@ describe('Test login routes', () => {
       chaiHttpResponse = await chai.request(app)
         .post('/login')
         .send(ACCESS_VALID_MOCK);
+      
+      console.log(chaiHttpResponse.body)
 
       expect(chaiHttpResponse).to.have.status(200);
       expect(chaiHttpResponse.body).to.have.property('token');
+      expect(chaiHttpResponse.body).to.have.property('username');
+      expect(chaiHttpResponse.body).to.have.property('accountId');
     });
   });
 

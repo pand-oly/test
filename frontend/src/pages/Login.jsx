@@ -8,7 +8,7 @@ import {
 } from '../middleware/validateAccess';
 
 import '../styles/access.css';
-import pigBanck from '../public/icons/cofrinho.png';
+import pigBank from '../public/icons/cofrinho.png';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -17,18 +17,23 @@ export default function Login() {
   const [inputPassword, setInputPassword] = useState(true);
   const [alertErorr, setAlert] = useState('');
 
-  const { setToken } = useContext(MainContext);
+  const { setToken, setUser } = useContext(MainContext);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const login = await requestAccess('/login', { username, password });
+
     if (!login.token) {
       if (login.status === 400) return setAlert(login.data.message[0].message);
       return setAlert(login.data.error);
     }
+
     setToken(login.token);
+    setUser({ username: login.username, accountId: login.accountId });
+
     return navigate('/home');
   };
 
@@ -46,10 +51,10 @@ export default function Login() {
 
   return (
     <section className="main_container_access">
-      <img src={pigBanck} alt="icon-pig-banck" className="icon_access" />
+      <img src={pigBank} alt="icon-pig-bank" className="icon_access" />
       <div className="container_access">
         <h1 className="title_access">Login</h1>
-        <form className="items-conter">
+        <form className="items-conter" onSubmit={handleSubmit}>
           <fieldset className="container_access_fieldset">
             <legend>Username</legend>
             <input
@@ -79,11 +84,7 @@ export default function Login() {
             </span>
           </fieldset>
           {alertErorr.length > 0 && <span>{alertErorr}</span>}
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="button_access bg-pink-500"
-          >
+          <button type="submit" className="button_access bg-pink-500">
             Login
           </button>
           <p>or</p>
