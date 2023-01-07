@@ -4,6 +4,10 @@ const api = axios.create({
   baseURL: `http://localhost:${process.env.REACT_APP_API_PORT || '3001'}`,
 });
 
+export const setToken = (token) => {
+  api.defaults.headers.common.Authorization = token;
+};
+
 export const requestAccess = async (endpoint, body) => {
   try {
     const { data } = await api.post(endpoint, body);
@@ -13,8 +17,11 @@ export const requestAccess = async (endpoint, body) => {
   }
 };
 
-/*
-export const setToken = (token) => {
-  api.defaults.headers.common.Authorization = token;
+export const requestTransaction = async (body) => {
+  try {
+    const { data } = await api.put('/transaction', body);
+    return data;
+  } catch (error) {
+    return error.response;
+  }
 };
-*/
