@@ -1,14 +1,13 @@
 import CardHistory from './CardHistory';
 
 import '../styles/home.css';
+import PopupTransaction from './PopupTransaction';
 
 export default function ContainerHome() {
   return (
     <div className="main-container-home">
       <div className="container-btn-home">
-        <button type="button" className="btn-home">
-          Transaction
-        </button>
+        <PopupTransaction />
       </div>
       <div>
         <h3 className="title-history">history</h3>
