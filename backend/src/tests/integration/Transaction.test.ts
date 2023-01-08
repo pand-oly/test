@@ -96,7 +96,7 @@ describe('Test transaction route', () => {
         .resolves([RETURNS_TRANSACTION_SUCCESS]);
       
       chaiHttpResponse = await chai.request(app)
-        .get('/transaction')
+        .get('/transaction/1')
         .set('authorization', 'any-token');
       
       expect(chaiHttpResponse).to.have.status(200);
@@ -108,7 +108,7 @@ describe('Test transaction route', () => {
     it('Returns status code 400 case invalid token', async () => {
       sinon.stub(jwt, 'verify').throws();
       chaiHttpResponse = await chai.request(app)
-        .get('/transaction')
+        .get('/transaction/1')
         .set('authorization', 'invalid-token');
 
       expect(chaiHttpResponse).to.have.status(400);

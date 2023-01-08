@@ -9,4 +9,9 @@ export default class TransactionRepository implements ITransactionRepository {
     const transaction = this._transactionModel.create(data);
     return transaction;
   }
+
+  public async findAll(id: number): Promise<ITransaction[]> {
+    const transactions = await this._transactionModel.findAll(id);
+    return transactions;
+  }
 }
