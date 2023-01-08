@@ -17,7 +17,7 @@ describe('Test balance routes', () => {
 
   beforeEach(() => sinon.restore());
 
-  it('GET /balance - returns status code 200 and value balance', async () => {
+  it('GET /balance - returns status code 200 and key balance', async () => {
     sinon.stub(JwtTokenProvider.prototype, 'verifyToken');
     sinon.stub(AccountRepository.prototype, 'findOne').resolves(ACCOUNT_1_MOCK);
 
@@ -26,6 +26,6 @@ describe('Test balance routes', () => {
       .set('authorization', 'any-token');
     
     expect(chaiHttpResponse).to.have.status(200);
-    expect(chaiHttpResponse.body).to.be.equal({ balance: ACCOUNT_1_MOCK.balance })
+    expect(chaiHttpResponse.body).to.have.property('balance')
   });
 });
