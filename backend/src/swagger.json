@@ -155,9 +155,8 @@
       "put": {
         "summary": "Rota para a trnsação de credito entre usuários",
         "description": "Um usuário com o token valido pode tranferir creditos seus para um outro usuário cadastrado no banco de dados",
-        "tags": [
-          "Transaction"
-        ],
+        "tags": ["Transaction"],
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
@@ -212,6 +211,65 @@
           }
         }
       }
+    },
+    "/balance/{id}": {
+      "get": {
+        "summary": "Rota para buscar valor do saldo da conta de um usuário",
+        "description": "Um usuário com token valido pode buscar seu saldo para imprimir na tela",
+        "tags": ["Account"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Account ID, a number in the url that indicates the id of the account in which you want the balance",
+            "required": true,
+            "schema": {
+             "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response case invalid token": {
+                "value": {
+                  "error": "Valid token required"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -240,6 +298,13 @@
             "type": "number"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
