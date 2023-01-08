@@ -88,4 +88,30 @@ describe('Test transaction route', () => {
       expect(chaiHttpResponse).to.have.status(401);
     })
   });
+
+  describe('GET /transaction, success case', () => {
+    it('Resturns status code 200', async () => {
+      sinon.stub(JwtTokenProvider.prototype,  'verifyToken');
+      sinon.stub(TransactionRepository.prototype, 'findAll')
+        .resolves([RETURNS_TRANSACTION_SUCCESS]);
+      
+      chaiHttpResponse = await chai.request(app)
+        .get('/transaction/1')
+        .set('authorization', 'any-token');
+      
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+
+  });
+
+  describe('GET /transaction, success case', () => {
+    it('Returns status code 400 case invalid token', async () => {
+      sinon.stub(jwt, 'verify').throws();
+      chaiHttpResponse = await chai.request(app)
+        .get('/transaction/1')
+        .set('authorization', 'invalid-token');
+
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+  });
 });

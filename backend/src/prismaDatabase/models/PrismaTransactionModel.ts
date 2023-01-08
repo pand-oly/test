@@ -18,4 +18,16 @@ export default class PrismaTransactionModel {
 
     return result;
   }
+
+  public async findAll(id: number) {
+    const result = await this._prisma.transactions.findMany({
+      where: {
+        OR: [ // eslint-disable-line @typescript-eslint/naming-convention
+          { debitedAccountId: id },
+          { creditedAccountId: id },
+        ],
+      },
+    });
+    return result;
+  }
 }

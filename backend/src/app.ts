@@ -2,7 +2,7 @@ import 'express-async-errors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import errorHandler from './middleware/errorHandle';
-import { registerRoute, loginRoute, transactionRoute } from './routes';
+import { registerRoute, loginRoute, transactionRoute, balanceRoute } from './routes';
 import swaggerDocs from './swagger.json';
 
 class App {
@@ -15,6 +15,7 @@ class App {
     this.app.use(registerRoute);
     this.app.use(loginRoute);
     this.app.use(transactionRoute);
+    this.app.use(balanceRoute);
 
     this.app.use(errorHandler);
   }

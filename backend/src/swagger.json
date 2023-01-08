@@ -155,14 +155,13 @@
       "put": {
         "summary": "Rota para a trnsação de credito entre usuários",
         "description": "Um usuário com o token valido pode tranferir creditos seus para um outro usuário cadastrado no banco de dados",
-        "tags": [
-          "Transaction"
-        ],
+        "tags": ["Transaction"],
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/transaction"
+                "$ref": "#/components/schemas/newTransaction"
               },
               "examples": {
                 "transaction": {
@@ -212,6 +211,121 @@
           }
         }
       }
+    },
+    "/transaction/{id}": {
+      "get": {
+        "summary": "Rota para buscar todo historico de transações de um usuário",
+        "description": "Um usuário com token valido pode buscar seu historico de transações",
+        "tags": ["Transaction"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Account ID, a number in the url that indicates the id of the account in which you want the balance",
+            "required": true,
+            "schema": {
+             "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "examples": {
+            "Response case invalid token": {
+              "value": {
+                "error": "Valid token required"
+              }
+            }
+          }
+          },
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/transaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/balance/{id}": {
+      "get": {
+        "summary": "Rota para buscar valor do saldo da conta de um usuário",
+        "description": "Um usuário com token valido pode buscar seu saldo para imprimir na tela",
+        "tags": ["Account"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Account ID, a number in the url that indicates the id of the account in which you want the balance",
+            "required": true,
+            "schema": {
+             "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response case invalid token": {
+                "value": {
+                  "error": "Valid token required"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -227,6 +341,21 @@
           }
         }
       },
+      "newTransaction": {
+        "type": "object",
+        "properties": {
+          "debitedAccountId": {
+            "type": "number"
+          },
+          "creditedAccountId": {
+            "type": "number"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
       "transaction": {
         "type": "object",
         "properties": {
@@ -237,9 +366,21 @@
             "type": "number"
           },
           "value": {
-            "type": "number"
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
