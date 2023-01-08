@@ -6,6 +6,7 @@ import { app } from '../../app';
 
 import JwtTokenProvider from '../../providers/implementations/JwtTokenProvider';
 import AccountRepository from '../../repositories/implementations/AccountRepository';
+import Jwt from 'jsonwebtoken';
 
 import { ACCOUNT_1_MOCK } from '../mocks/accountMocks';
 
@@ -28,4 +29,14 @@ describe('Test balance routes', () => {
     expect(chaiHttpResponse).to.have.status(200);
     expect(chaiHttpResponse.body).to.have.property('balance')
   });
+
+  it('GET /balance - returns status code 400 case invalid token', async () => {
+    sinon.stub(Jwt, 'verify').throws();
+
+    chaiHttpResponse = await chai.request(app)
+      .get('/balance/1')
+      .set('authorization', 'invalid-token');
+    
+    expect(chaiHttpResponse).to.have.status(400);
+  })
 });
