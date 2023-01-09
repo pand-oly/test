@@ -37,6 +37,12 @@
 - Rota de transferencia de credito
 > - `/transaction` _Responsavel pela transação de credito entre usuarios do banco de dados_
 
+- Rota para buscar saldo da conta
+> - `/balance/:id` _Responsavel por buscar valor de "balance" na tabela de "Account" do usuário verificado_
+
+- Rota para buscar historico de transações
+> - `/transaction/:id` _Responsavel por buscar todo o historico de transações feitas pelo usuário_
+
 ### Testes
 
 Para rodar os testes do back-end
