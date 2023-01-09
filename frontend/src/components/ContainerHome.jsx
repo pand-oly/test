@@ -8,6 +8,7 @@ import PopupTransaction from './PopupTransaction';
 
 export default function ContainerHome() {
   const [historyTransactions, setHistory] = useState([]);
+  const [limitHistory, setLimit] = useState(0);
 
   const { user, token } = useContext(MainContext);
 
@@ -17,10 +18,20 @@ export default function ContainerHome() {
       const arrayTransactions = await requestHistoryTransactions(
         user.accountId
       );
-      setHistory(arrayTransactions);
+      setHistory(arrayTransactions.reverse());
     };
     fetchData();
   }, []);
+
+  const seeMore = (e) => {
+    e.preventDefault();
+    setLimit(limitHistory + 3);
+  };
+
+  const seeLess = (e) => {
+    e.preventDefault();
+    setLimit(limitHistory - 3);
+  };
 
   return (
     <div className="main-container-home">
@@ -41,10 +52,28 @@ export default function ContainerHome() {
           </button>
         </div>
         <div className="container-card-history">
+          {limitHistory > 0 && (
+            <button type="button" onClick={seeLess}>
+              see less...
+            </button>
+          )}
+
           {historyTransactions &&
-            historyTransactions.map((transaction, index) => (
-              <CardHistory transaction={transaction} index={index} />
-            ))}
+            historyTransactions.map((transaction, index) => {
+              /*eslint-disable-line*/ while (
+                index >= limitHistory &&
+                index < limitHistory + 3
+              ) {
+                return <CardHistory transaction={transaction} index={index} />;
+              }
+              return <span />;
+            })}
+
+          {limitHistory <= historyTransactions.length && (
+            <button type="button" onClick={seeMore}>
+              see more...
+            </button>
+          )}
         </div>
       </div>
     </div>

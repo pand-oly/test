@@ -18,7 +18,7 @@ export default function Header() {
     if (!balance.balance) {
       setBalance('invalid'); //! melhorar depois
     }
-    setBalance(balance.balance);
+    setBalance(Number(balance.balance).toFixed(2));
     return setSeeBalance(!seeBalance);
   };
 
