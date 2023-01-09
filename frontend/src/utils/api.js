@@ -25,3 +25,12 @@ export const requestTransaction = async (body) => {
     return error.response;
   }
 };
+
+export const requestBalance = async (id) => {
+  try {
+    const { data } = await api.get(`/balance/${id}`);
+    return data;
+  } catch (error) {
+    return error.response;
+  }
+};
