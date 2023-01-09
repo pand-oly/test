@@ -34,3 +34,12 @@ export const requestBalance = async (id) => {
     return error.response;
   }
 };
+
+export const requestHistoryTransactions = async (id) => {
+  try {
+    const { data } = await api.get(`/transaction/${id}`);
+    return data;
+  } catch (error) {
+    return error.response;
+  }
+};
