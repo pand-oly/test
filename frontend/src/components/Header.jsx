@@ -1,12 +1,26 @@
 import { useState, useContext } from 'react';
 import MainContext from '../context/MainContext';
+import { requestBalance, setToken } from '../utils/api';
 
 import '../styles/header.css';
 import pigBank from '../public/icons/cofrinho.png';
 
 export default function Header() {
   const [seeBalance, setSeeBalance] = useState(false);
-  const { user } = useContext(MainContext);
+  const [valueBalance, setBalance] = useState(0);
+  const { user, token } = useContext(MainContext);
+
+  const showBalance = async (e) => {
+    e.preventDefault();
+
+    setToken(token);
+    const balance = await requestBalance(user.accountId);
+    if (!balance.balance) {
+      setBalance('invalid'); //! melhorar depois
+    }
+    setBalance(balance.balance);
+    return setSeeBalance(!seeBalance);
+  };
 
   return (
     <section className="main-container-header">
@@ -19,12 +33,8 @@ export default function Header() {
       </div>
       <div>
         Balance:{' '}
-        <button
-          type="button"
-          onClick={() => setSeeBalance(!seeBalance)}
-          className="btn-balance"
-        >
-          {seeBalance ? 'saldo' : 'Visualizar'}
+        <button type="button" onClick={showBalance} className="btn-balance">
+          {seeBalance ? valueBalance : 'Visualizar'}
         </button>
       </div>
       <button type="button">logout</button>

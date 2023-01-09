@@ -1,9 +1,27 @@
+import { useEffect, useState, useContext } from 'react';
 import CardHistory from './CardHistory';
+import { requestHistoryTransactions, setToken } from '../utils/api';
+import MainContext from '../context/MainContext';
 
 import '../styles/home.css';
 import PopupTransaction from './PopupTransaction';
 
 export default function ContainerHome() {
+  const [historyTransactions, setHistory] = useState([]);
+
+  const { user, token } = useContext(MainContext);
+
+  useEffect(() => {
+    setToken(token);
+    const fetchData = async () => {
+      const arrayTransactions = await requestHistoryTransactions(
+        user.accountId
+      );
+      setHistory(arrayTransactions);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="main-container-home">
       <div className="container-btn-home">
@@ -23,7 +41,10 @@ export default function ContainerHome() {
           </button>
         </div>
         <div className="container-card-history">
-          <CardHistory />
+          {historyTransactions &&
+            historyTransactions.map((transaction, index) => (
+              <CardHistory transaction={transaction} index={index} />
+            ))}
         </div>
       </div>
     </div>
