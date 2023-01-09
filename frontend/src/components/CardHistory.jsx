@@ -2,12 +2,12 @@ import PropType from 'prop-types';
 
 import '../styles/home.css';
 
-export default function CardHistory({ transaction, index }) {
+export default function CardHistory({ transaction, index, title }) {
   const { debitedAccountId, creditedAccountId, value, createdAt } = transaction;
 
   return (
     <div className="card-history" key={index}>
-      <h3>cash-in/cash-out</h3>
+      <h3>{title}</h3>
       <p>
         debitedAccountId: <span>{debitedAccountId}</span>
       </p>
@@ -32,4 +32,5 @@ CardHistory.propTypes = {
     createdAt: PropType.string.isRequired,
   }).isRequired,
   index: PropType.number.isRequired,
+  title: PropType.string.isRequired,
 };
