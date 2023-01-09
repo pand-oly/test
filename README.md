@@ -57,3 +57,7 @@ Para rodar os testes do back-end
 ## Front-end
 
 ### Em contrução
+
+o front-end ainda esta sendo feito pra o ver em ação pode user o comando `npm run compose-up:dev` ou na pasta frontend o comando `npm start`
+
+
