@@ -7,6 +7,7 @@ import {
   validateUsername,
   validatePassword,
 } from '../middleware/validateAccess';
+import { setLocalData } from '../utils/localStorage';
 
 import '../styles/access.css';
 import pigBank from '../public/icons/cofrinho.png';
@@ -46,6 +47,9 @@ export default function Access({ title }) {
 
     setToken(access.token);
     setUser({ username: access.username, accountId: access.accountId });
+    setLocalData('token', access.token);
+    setLocalData('username', access.username);
+    setLocalData('accountId', access.accountId);
     return navigate('/home');
   };
 

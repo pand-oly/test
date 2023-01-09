@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainContext from '../context/MainContext';
 import { requestBalance, setToken } from '../utils/api';
 
@@ -10,6 +11,8 @@ export default function Header() {
   const [valueBalance, setBalance] = useState(0);
   const { user, token } = useContext(MainContext);
 
+  const navigate = useNavigate();
+
   const showBalance = async (e) => {
     e.preventDefault();
 
@@ -20,6 +23,13 @@ export default function Header() {
     }
     setBalance(Number(balance.balance).toFixed(2));
     return setSeeBalance(!seeBalance);
+  };
+
+  const logout = (e) => {
+    e.preventDefault();
+
+    localStorage.clear();
+    navigate('/login');
   };
 
   return (
@@ -37,7 +47,9 @@ export default function Header() {
           {seeBalance ? valueBalance : 'Visualizar'}
         </button>
       </div>
-      <button type="button">logout</button>
+      <button type="button" onClick={logout}>
+        logout
+      </button>
     </section>
   );
 }
