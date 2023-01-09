@@ -20,7 +20,9 @@
 * Na raiz do projeto rode o comando `npm run prestart`.
   - Aqui instala as dependencias de back-end e sobe os containers para uso
 
-## Requisições da Api / Database
+## Back-end
+
+### Requisições da Api / Database
 
 > - Confira a [documentação](http://localhost:3001/api-docs/) da api feita com `swagger` na rota `http://localhost:3001/api-docs/`
 **Obs.** Esta rota esta disponível somente com os containers rodando
@@ -34,3 +36,18 @@
 
 - Rota de transferencia de credito
 > - `/transaction` _Responsavel pela transação de credito entre usuarios do banco de dados_
+
+### Testes
+
+Para rodar os testes do back-end
+  * Entre na pasta de back-end
+    - `cd backend/`
+  
+  * Execute o teste
+    - `npm test`
+
+**Obs.** Não ah necessidade do container estar rodando para executar os testes, foram feitos mocks para todos os testes.
+
+## Front-end
+
+### Em contrução
