@@ -29,6 +29,8 @@
   "rules": {
     "no-console": "warn",
     "camelcase": "warn",
+    "semi": "error",
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "react/jsx-filename-extension": [
       "error",
       {
@@ -92,6 +94,12 @@
       "files": ["*.ts"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "error"
+      }
+    },
+    {
+      "files": ["vite.config.ts"],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
       }
     }
   ]
