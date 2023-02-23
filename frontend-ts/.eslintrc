@@ -73,7 +73,7 @@
     ],
     "react-hooks/exhaustive-deps": "error",
     "react-hooks/rules-of-hooks": "error",
-    "max-len": ["error", { "code": 80 }],
+    "max-len": ["error", { "code": 90 }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
@@ -86,7 +86,8 @@
         "format": ["strictCamelCase"],
         "leadingUnderscore": "require"
       }
-    ]
+    ],
+    "import/no-extraneous-dependencies": "off"
   },
   "overrides": [
     {
@@ -94,12 +95,6 @@
       "files": ["*.ts"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "error"
-      }
-    },
-    {
-      "files": ["vite.config.ts"],
-      "rules": {
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
       }
     }
   ]
