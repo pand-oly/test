@@ -5,6 +5,7 @@ import type {
   RequestTransaction,
   ResponseTransaction,
 } from '../entities/transaction';
+import type { Balance } from '../entities/user';
 
 const api = axios.create({
   baseURL: `http://localhost:${process.env.REACT_APP_API_PORT || '3001'}`,
@@ -49,10 +50,10 @@ export const requestTransaction = async (
   }
 };
 
-export const requestBalance = async (id: string): Promise<number | string> => {
+export const requestBalance = async (id: string): Promise<Balance | string> => {
   try {
     const { data } = await api.get(`/balance/${id}`);
-    return data.balance;
+    return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return error.response?.data.error;
