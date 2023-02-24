@@ -6,5 +6,5 @@ export interface RequestAccess {
 export interface ResponseAccess {
   token: string;
   username: string;
-  AccountId: number;
+  accountId: number;
 }

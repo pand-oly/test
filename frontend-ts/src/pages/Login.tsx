@@ -1,9 +1,12 @@
+import MainContext from '../context/MainContext';
 import {
   validateUsername,
   validatePassword,
 } from '../middleware/validateAccess';
-import { useState, useEffect } from 'react';
+import { requestAccess } from '../utils/api';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { MainContextInterface } from '../entities/MainContextInterface';
 import type { FormEvent } from 'react';
 
 export default function Login() {
@@ -11,13 +14,22 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [inputUsername, setInputUsername] = useState('');
   const [inputPassword, setInputPassword] = useState('');
-  const [alertErorr, _setAlert] = useState('');
+  const [alertErorr, setAlert] = useState('');
   const navigate = useNavigate();
+
+  const { setToken, setUser } = useContext<MainContextInterface>(MainContext);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // !
+    const login = await requestAccess('/login', { username, password });
+
+    if (typeof login === 'string') {
+      return setAlert(login);
+    }
+
+    setToken(login.token);
+    setUser({ username: login.username, accountId: login.accountId });
 
     return navigate('/home');
   };
