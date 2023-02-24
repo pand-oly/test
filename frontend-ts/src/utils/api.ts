@@ -1,10 +1,10 @@
 import axios from 'axios';
-import type { RequestAccess, ResponseAccess } from '../interfaces/access';
+import type { RequestAccess, ResponseAccess } from '../entities/access';
 import type {
   HistoryTransaction,
   RequestTransaction,
   ResponseTransaction,
-} from '../interfaces/transaction';
+} from '../entities/transaction';
 
 const api = axios.create({
   baseURL: `http://localhost:${process.env.REACT_APP_API_PORT || '3001'}`,
