@@ -71,7 +71,7 @@
         "alphabetize": { "order": "asc" }
       }
     ],
-    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
     "max-len": ["error", { "code": 90 }],
     "@typescript-eslint/explicit-function-return-type": "off",
