@@ -8,7 +8,7 @@ import type {
 import type { Balance } from '../entities/user';
 
 const api = axios.create({
-  baseURL: `http://localhost:${process.env.REACT_APP_API_PORT || '3001'}`,
+  baseURL: `http://localhost:${import.meta.env.VITE_APP_API_PORT}`,
 });
 
 export const setToken = (token: string): void => {
