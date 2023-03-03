@@ -12,13 +12,21 @@ const passwordSchema = z
   .regex(REGEX_VALIDATE_PASSWORD);
 
 export function validateUsername(value: string): boolean {
-  const validate = userNameSchema.safeParse(value);
+  const result = userNameSchema.safeParse(value);
 
-  return validate.success;
+  return result.success;
 }
 
 export function validatePassword(value: string): boolean {
-  const validate = passwordSchema.safeParse(value);
+  const result = passwordSchema.safeParse(value);
 
-  return validate.success;
+  return result.success;
+}
+
+export function validate(name: string, value: string): boolean {
+  if (name === 'username') {
+    return validateUsername(value);
+  } else {
+    return validatePassword(value);
+  }
 }
