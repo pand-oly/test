@@ -1,4 +1,4 @@
-import { Login, Register } from './pages';
+import { Home, Login, Register } from './pages';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Navigate replace to="/login" />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/home" element={<Home />} />
     </Routes>
   );
 }
