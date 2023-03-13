@@ -1,12 +1,11 @@
 import ButtonForms from './ButtonForms';
 import FormInput from './FormInput';
-import MainContext from '../context/MainContext';
 import { requestAccess } from '../utils/api';
+import { setLocalData } from '../utils/localStorage';
 
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import type { MainContextInterface } from '../entities/MainContextInterface';
 import type { ButtonProps } from '../entities/buttonType';
 import type { FormEvent } from 'react';
 
@@ -23,8 +22,6 @@ export default function Form({ label, extraButton }: FormProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { setToken, setUser } = useContext<MainContextInterface>(MainContext);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -37,11 +34,14 @@ export default function Form({ label, extraButton }: FormProps) {
       return setAlert(responseApi);
     }
 
-    setToken(responseApi.token);
-    setUser({
-      username: responseApi.username,
-      accountId: responseApi.accountId,
-    });
+    setLocalData('token', responseApi.token);
+    setLocalData(
+      'user',
+      JSON.stringify({
+        username: responseApi.username,
+        accountId: responseApi.accountId,
+      })
+    );
 
     return navigate('/home');
   };
