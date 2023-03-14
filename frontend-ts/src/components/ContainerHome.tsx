@@ -21,7 +21,7 @@ export default function ContainerHome() {
       requestTransactions = await requestHistoryTransactions(user.accountId);
 
       if (typeof requestTransactions === 'object') {
-        setHistory(requestTransactions);
+        setHistory(requestTransactions.reverse());
       } else {
         setErrorHistory(requestTransactions);
       }
