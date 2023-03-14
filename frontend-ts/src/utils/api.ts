@@ -66,7 +66,7 @@ export const requestBalance = async (id: string): Promise<Balance | string> => {
 };
 
 export const requestHistoryTransactions = async (
-  id: string
+  id: number
 ): Promise<HistoryTransaction[] | string> => {
   try {
     const { data } = await api.get(`/transaction/${id}`);

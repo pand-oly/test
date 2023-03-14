@@ -1,4 +1,5 @@
 import CardHistory from './CardHistory';
+import ModalTransaction from './ModalTransaction';
 import { requestHistoryTransactions, setToken } from '../utils/api';
 import { getLocalDataToken, getLocalDataUser } from '../utils/localStorage';
 import { useCallback, useEffect, useState } from 'react';
@@ -46,6 +47,7 @@ export default function ContainerHome() {
     <p>{errorHistory}</p>
   ) : (
     <div className="main-container-home">
+      <ModalTransaction />
       <div>
         <h3 className="title-history">history</h3>
         <div className="container-filter-history">
