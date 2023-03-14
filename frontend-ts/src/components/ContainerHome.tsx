@@ -1,3 +1,4 @@
+import CardHistory from './CardHistory';
 import { requestHistoryTransactions, setToken } from '../utils/api';
 import { getLocalDataToken, getLocalDataUser } from '../utils/localStorage';
 import { useCallback, useEffect, useState } from 'react';
@@ -58,6 +59,12 @@ export default function ContainerHome() {
           <button type="button" className="btn-filter-history">
             cash-out
           </button>
+        </div>
+        <div className="container-card-history">
+          {historyTransactions &&
+            historyTransactions.map((transaction, index) => (
+              <CardHistory transaction={transaction} key={index} />
+            ))}
         </div>
       </div>
     </div>
