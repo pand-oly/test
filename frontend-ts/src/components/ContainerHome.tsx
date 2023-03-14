@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import type { HistoryTransaction } from '../entities/transaction';
 import type { User } from '../entities/user';
 
+import '../styles/home.css';
+
 export default function ContainerHome() {
   const [historyTransactions, setHistory] = useState<HistoryTransaction[]>();
   const [user, setUser] = useState<User>();
@@ -46,7 +48,7 @@ export default function ContainerHome() {
   return errorHistory ? (
     <p>{errorHistory}</p>
   ) : (
-    <div className="main-container-home">
+    <div className="home-container">
       <ModalTransaction />
       <div>
         <h3 className="title-history">history</h3>
