@@ -1,6 +1,10 @@
 import pigBank from '../assets/icons/cofrinho.png';
 import { requestBalance, setToken } from '../utils/api';
-import { getLocalDataUser, getLocalDataToken } from '../utils/localStorage';
+import {
+  getLocalDataUser,
+  getLocalDataToken,
+  clearLocalData,
+} from '../utils/localStorage';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { User } from '../entities/user';
@@ -39,6 +43,13 @@ export default function Header() {
     }
   };
 
+  const logout: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    event.preventDefault();
+
+    clearLocalData();
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar bg-dark text-bg-primary">
       <img
@@ -57,7 +68,9 @@ export default function Header() {
       <button type="button" onClick={showBalance}>
         {seeBalance ? valueBalance : 'Balance'}
       </button>
-      <button type="button">logout</button>
+      <button type="button" onClick={logout}>
+        logout
+      </button>
     </nav>
   );
 }

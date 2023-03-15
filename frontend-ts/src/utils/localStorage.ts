@@ -2,7 +2,7 @@ export function setLocalData(key: string, data: string): void {
   localStorage.setItem(key, data);
 }
 
-export function clearLocalData(key: string): void {
+export function removeLocalData(key: string): void {
   localStorage.removeItem(key);
 }
 
@@ -13,3 +13,7 @@ export function getLocalData(key: string): string | null {
 
 export const getLocalDataUser = getLocalData('user');
 export const getLocalDataToken = getLocalData('token');
+
+export function clearLocalData(): void {
+  localStorage.clear();
+}
