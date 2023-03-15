@@ -1,34 +1,52 @@
+import { useState } from 'react';
 import type { MouseEventHandler } from 'react';
 
+type SearchHistoryByIdType = (
+  id: string
+) => MouseEventHandler<HTMLButtonElement>;
+
 interface props {
-  filterCashInProps: MouseEventHandler<HTMLButtonElement>;
+  onFilterCashInProps: MouseEventHandler<HTMLButtonElement>;
   cashInActivate: boolean;
-  filterCashOutProps: MouseEventHandler<HTMLButtonElement>;
+  onFilterCashOutProps: MouseEventHandler<HTMLButtonElement>;
   cashOutActivate: boolean;
+  onSearchHistoryById: SearchHistoryByIdType;
 }
 
 export default function SectionFiltersHistory({
   cashInActivate,
   cashOutActivate,
-  filterCashInProps,
-  filterCashOutProps,
+  onFilterCashInProps,
+  onFilterCashOutProps,
+  onSearchHistoryById,
 }: props) {
+  const [inputSearch, setInputSearch] = useState('');
+
   return (
     <div>
       <div>
-        <input type="text" placeholder="Enter the transaction ID" />
-        <button type="button">search</button>
+        <input
+          type="text"
+          placeholder="Enter the transaction ID"
+          value={inputSearch}
+          onChange={({ target }: React.ChangeEvent<HTMLInputElement>) =>
+            setInputSearch(target.value)
+          }
+        />
+        <button type="button" onClick={onSearchHistoryById(inputSearch)}>
+          search
+        </button>
       </div>
       <button
         type="button"
-        onClick={filterCashInProps}
+        onClick={onFilterCashInProps}
         className={`btn ${cashInActivate ? 'btn-success' : 'btn-secondary'}`}
       >
         cash-in
       </button>
       <button
         type="button"
-        onClick={filterCashOutProps}
+        onClick={onFilterCashOutProps}
         className={`btn ${cashOutActivate ? 'btn-success' : 'btn-secondary'}`}
       >
         cash-out

@@ -19,7 +19,6 @@ export default function ContainerHistory() {
   const [loading, setLoading] = useState(true);
   const [cashInActivate, setCashInActivate] = useState(false);
   const [cashOutActivate, setCashOutActivate] = useState(false);
-
   const [token, setTokenState] = useState<string>('');
 
   const navigate = useNavigate();
@@ -34,6 +33,7 @@ export default function ContainerHistory() {
 
     setToken(token);
   }, [navigate, token]);
+
   useEffect(() => {
     const fetchData = async () => {
       let requestTransactions: HistoryTransaction[] | string;
@@ -41,8 +41,9 @@ export default function ContainerHistory() {
         requestTransactions = await requestHistoryTransactions(user.accountId);
 
         if (typeof requestTransactions === 'object') {
-          setHistory(requestTransactions.reverse());
-          setPrevHistory(requestTransactions);
+          const orderRequestTransactions = requestTransactions.reverse();
+          setHistory(orderRequestTransactions);
+          setPrevHistory(orderRequestTransactions);
           setLoading(false);
         } else {
           setErrorHistory(requestTransactions);
@@ -96,6 +97,23 @@ export default function ContainerHistory() {
     setLoading(false);
   };
 
+  const searchHistoryById =
+    (value: string): MouseEventHandler<HTMLButtonElement> =>
+    (event) => {
+      event.preventDefault();
+
+      if (value === '' || isNaN(Number(value))) {
+        return setHistory(prevHistoryTransactions);
+      }
+
+      const historyFiltered = prevHistoryTransactions.filter(
+        (transaction) =>
+          transaction.debitedAccountId === Number(value) ||
+          transaction.creditedAccountId === Number(value)
+      );
+      setHistory(historyFiltered);
+    };
+
   return errorHistory ? (
     <p>{errorHistory}</p>
   ) : (
@@ -104,8 +122,9 @@ export default function ContainerHistory() {
       <SectionFiltersHistory
         cashInActivate={cashInActivate}
         cashOutActivate={cashOutActivate}
-        filterCashInProps={filterCashIn}
-        filterCashOutProps={filterCashOut}
+        onFilterCashInProps={filterCashIn}
+        onFilterCashOutProps={filterCashOut}
+        onSearchHistoryById={searchHistoryById}
       />
       <ContainerCardHistory
         accountId={user?.accountId as number}
