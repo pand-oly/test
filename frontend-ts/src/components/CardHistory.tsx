@@ -7,18 +7,19 @@ interface transactionProps {
 
 interface props {
   transaction: transactionProps;
+  typeTransaction: string;
 }
 
 const cardStyle = {
   maxWidth: '18rem',
 };
 
-export default function CardHistory({ transaction }: props) {
+export default function CardHistory({ transaction, typeTransaction }: props) {
   const { debitedAccountId, creditedAccountId, value, createdAt } = transaction;
 
   return (
     <div className="card border-info mb-3" style={cardStyle}>
-      <div className="card-header">cash-in/cash-out</div>
+      <div className="card-header">{typeTransaction}</div>
       <div className="card-body">
         <h5 className="card-title">Info card title</h5>
         <p className="card-text">

@@ -13,11 +13,17 @@ const CARDS_PER_PAGE = 2;
 
 export default function ContainerHome() {
   const [historyTransactions, setHistory] = useState<HistoryTransaction[]>([]);
+  const [prevHistoryTransactions, setPrevHistory] = useState<
+    HistoryTransaction[]
+  >([]);
   const [user, setUser] = useState<User>();
   const [token, setTokenState] = useState<string>('');
   const [errorHistory, setErrorHistory] = useState<string>();
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState<number>(CARDS_PER_PAGE);
+  const [loading, setLoading] = useState(true);
+  const [cashInActivate, setCashInActivate] = useState(false);
+  const [cashOutActivate, setCashOutActivate] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,6 +34,7 @@ export default function ContainerHome() {
 
       if (typeof requestTransactions === 'object') {
         setHistory(requestTransactions.reverse());
+        setLoading(false);
       } else {
         setErrorHistory(requestTransactions);
       }
@@ -63,6 +70,41 @@ export default function ContainerHome() {
       }
     };
 
+  const filterCashIn: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    if (cashInActivate) {
+      setHistory(prevHistoryTransactions);
+    } else {
+      setPrevHistory(historyTransactions);
+      const historyFiltered = historyTransactions.filter(
+        (transaction) => transaction.creditedAccountId === user?.accountId
+      );
+      setHistory(historyFiltered);
+    }
+
+    setCashInActivate(!cashInActivate);
+    setLoading(false);
+  };
+
+  const filterCashOut: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    if (cashOutActivate) {
+      setHistory(prevHistoryTransactions);
+    } else {
+      setPrevHistory(historyTransactions);
+      const historyFiltered = historyTransactions.filter(
+        (transaction) => transaction.debitedAccountId === user?.accountId
+      );
+      setHistory(historyFiltered);
+    }
+    setCashOutActivate(!cashOutActivate);
+    setLoading(false);
+  };
+
   return errorHistory ? (
     <p>{errorHistory}</p>
   ) : (
@@ -75,18 +117,48 @@ export default function ContainerHome() {
             <input type="text" />
             <button type="button">search</button>
           </div>
-          <button type="button">cash-in</button>
-          <button type="button">cash-out</button>
+          <button
+            type="button"
+            onClick={filterCashIn}
+            className={`btn ${
+              cashInActivate ? 'btn-success' : 'btn-secondary'
+            }`}
+          >
+            cash-in
+          </button>
+          <button
+            type="button"
+            onClick={filterCashOut}
+            className={`btn ${
+              cashOutActivate ? 'btn-success' : 'btn-secondary'
+            }`}
+          >
+            cash-out
+          </button>
         </div>
         <div className="container-card-history">
           {historyTransactions &&
             historyTransactions
               .slice(startIndex, endIndex)
-              .map((transaction, index) => (
-                <div className="card-history-inline" key={index}>
-                  <CardHistory transaction={transaction} />
-                </div>
-              ))}
+              .map((transaction, index) => {
+                let typeTransaction: string;
+                if (transaction.debitedAccountId === user?.accountId) {
+                  typeTransaction = 'cash-out';
+                } else {
+                  typeTransaction = 'cash-in';
+                }
+
+                return loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <div className="card-history-inline" key={index}>
+                    <CardHistory
+                      transaction={transaction}
+                      typeTransaction={typeTransaction}
+                    />
+                  </div>
+                );
+              })}
           <button type="button" onClick={handleCardHistory('prev')}>
             prev
           </button>
