@@ -7,7 +7,13 @@ export default function Login() {
 
   return (
     <section className="main_container_access">
-      <img src={pigBank} alt="icon-pig-bank" className="icon_access" />
+      <img
+        src={pigBank}
+        alt="icon-pig-bank"
+        width="160"
+        height="160"
+        style={{ marginBottom: '1rem' }}
+      />
       <Form
         label="Login"
         extraButton={{
