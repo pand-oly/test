@@ -4,7 +4,7 @@ Esta é uma aplicação web fullstack, dockerizada, cujo objetivo seja possibili
 
 Para construir esse projeto foram utilizadas as seguinte tecnologias:
 
-- `:blue_square:` Eslint - Para padronização de código
+- 🔷 Eslint - Para padronização de código
 - 🐙 Git - Para versionamento de código
 
 Back-end 🧑‍💻
@@ -69,7 +69,7 @@ Para rodar os testes do back-end
 - Execute o teste
   - `npm test`
 
-`:eyes:` Não ah necessidade do container estar rodando para executar os testes, foram feitos mocks para todos os testes.
+👀  Não ah necessidade do container estar rodando para executar os testes, foram feitos mocks para todos os testes.
 
 ### Diagrama de Entidade Relacionamento
 
