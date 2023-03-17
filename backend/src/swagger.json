@@ -55,10 +55,75 @@
         },
         "responses": {
           "409": {
-            "description": "Conflic"
+            "description": "Conflic",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Conflic: username already in use"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "array",
+                      "items":{
+                        "anyOf": {
+                          "$ref": [
+                            "#/components/schemas/TooSmallError",
+                            "#/components/schemas/InvalidStringError"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "invalid-username": {
+                    "value": {
+                      "message": [
+                        {
+                          "code": "too_small",
+                          "minimum": 3,
+                          "type": "string",
+                          "inclusive": true,
+                          "message": "String must contain at least 8 character(s)",
+                          "path": [
+                            "username"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "invalid-password": {
+                    "value": {
+                      "message": [
+                        {
+                          "validation": "regex",
+                          "code": "invalid_string",
+                          "message": "Password must have at least 8 characters and contain at least one number and one capital letter",
+                          "path": [
+                            "password"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           },
           "200": {
             "description": "Ok",
@@ -122,10 +187,75 @@
         },
         "responses": {
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No User found error"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "array",
+                      "items":{
+                        "anyOf": {
+                          "$ref": [
+                            "#/components/schemas/TooSmallError",
+                            "#/components/schemas/InvalidStringError"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "invalid-username": {
+                    "value": {
+                      "message": [
+                        {
+                          "code": "too_small",
+                          "minimum": 3,
+                          "type": "string",
+                          "inclusive": true,
+                          "message": "String must contain at least 8 character(s)",
+                          "path": [
+                            "username"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "invalid-password": {
+                    "value": {
+                      "message": [
+                        {
+                          "validation": "regex",
+                          "code": "invalid_string",
+                          "message": "Password must have at least 8 characters and contain at least one number and one capital letter",
+                          "path": [
+                            "password"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           },
           "200": {
             "description": "Ok",
@@ -170,17 +300,78 @@
                     "creditedAccountId": 2,
                     "value": 80
                   }
+                },
+                "insufisiente-credit": {
+                  "value": {
+                    "debitedAccountId": 1,
+                    "creditedAccountId": 2,
+                    "value": 1000
+                  }
+                },
+                "destination-not-found": {
+                  "value": {
+                    "debitedAccountId": 1,
+                    "creditedAccountId": 404,
+                    "value": 1
+                  }
                 }
               }
             }
           }
         },
         "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "destination-not-found": {
+                    "value": {
+                      "error": "No User found error"
+                    }
+                  },
+                  "token-required": {
+                    "value": {
+                      "error": "Valid token required"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Insufisiente Credit in your account"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/invalidToken"
+                }
+              }
+            }
           },
           "200": {
             "description": "Ok",
@@ -230,24 +421,28 @@
           }
         ],
         "responses": {
-          "400": {
-          "description": "Bad Request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "error": {
-                    "type": "string"
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Valid token required"
+                    }
                   }
                 }
               }
             }
           },
-          "examples": {
-            "Response case invalid token": {
-              "value": {
-                "error": "Valid token required"
+          "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/invalidToken"
               }
             }
           }
@@ -281,7 +476,7 @@
             "description": "Account ID, a number in the url that indicates the id of the account in which you want the balance",
             "required": true,
             "schema": {
-             "type": "number"
+             "type": "string"
             }
           }
         ],
@@ -302,27 +497,31 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Valid token required"
                     }
                   }
                 }
               }
-            },
-            "examples": {
-              "Response case invalid token": {
-                "value": {
-                  "error": "Valid token required"
-                }
+            }
+          },
+          "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/invalidToken"
               }
             }
+          }
           }
         }
       }
@@ -374,6 +573,75 @@
             "format": "date-time"
           }
         }
+      },
+      "TooSmallError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "minimum": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          },
+          "inclusive": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "code",
+          "minimum",
+          "type",
+          "inclusive",
+          "message",
+          "path"
+        ]
+      },
+      "InvalidStringError": {
+        "type": "object",
+        "properties": {
+          "validation": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "validation",
+          "code",
+          "message",
+          "path"
+        ]
+      },
+      "invalidToken": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Invalid token"
+          }
+        }        
       }
     },
     "securitySchemes": {

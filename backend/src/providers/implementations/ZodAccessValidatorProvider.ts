@@ -1,17 +1,24 @@
-import { z, ZodSchema } from 'zod';
-import IAccessValidatorProvider from '../IAccessValidatorProvider';
+import { z, ZodSchema } from "zod";
+import IAccessValidatorProvider from "../IAccessValidatorProvider";
 
 const accessSchema = z.object({
   username: z.string().min(3),
-  password: z.string().min(8).regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-    'Password must have at least one number and one capital letter',
-  ),
+  password: z
+    .string()
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+      "Password must have at least 8 characters and contain at " +
+        "least one number and one capital letter"
+    ),
 });
 
-export default class ZodAccessValidatorProvider implements IAccessValidatorProvider {
+export default class ZodAccessValidatorProvider
+  implements IAccessValidatorProvider
+{
   private _schema: ZodSchema;
-  constructor() { this._schema = accessSchema; }
+  constructor() {
+    this._schema = accessSchema;
+  }
 
   public async validator(obj: unknown) {
     await this._schema.parseAsync(obj);

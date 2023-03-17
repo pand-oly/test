@@ -1,5 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
 import { Home, Login, Register } from './pages';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
   return (
