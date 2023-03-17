@@ -1,6 +1,23 @@
 version: '3.9'
 
 services:
+  frontend:
+    container_name: app_frontend
+    build: ./frontend
+    ports:
+      - 3000:4173
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "lsof", "-t", "-i:3001" ]
+      timeout: 10s
+      retries: 5
+    environment:
+      VITE_APP_API_PORT: 3001
+    volumes:
+      - ./frontend:/app-frontend
+      - /app-frontend/dist
   backend:
     container_name: app_backend
     build: ./backend

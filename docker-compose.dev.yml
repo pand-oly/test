@@ -5,15 +5,18 @@ services:
     container_name: app_frontend_dev
     build: ./frontend
     ports:
-       - 3000:3000
+      - 3000:5173
+    command: npm run dev
     depends_on:
-       backend:
-         condition: service_healthy
+      backend:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3001"]
+      test: [ "CMD", "lsof", "-t", "-i:3001" ]
       timeout: 10s
       retries: 5
-    volumes: 
+    environment:
+      VITE_APP_API_PORT: 3001
+    volumes:
       - ./frontend:/app-frontend
   backend:
     container_name: app_backend_dev
@@ -25,16 +28,16 @@ services:
       db:
         condition: service_healthy
     command: npm run dev
-    volumes: 
+    volumes:
       - ./backend:/app-backend
     environment:
-      DATABASE_URL : postgresql://user:password@db:5432/database?schema=public
+      DATABASE_URL: postgresql://user:password@db:5432/database?schema=public
       APP_PORT: 3001
       JWT_SECRET: jwt_secret
-    networks: 
+    networks:
       - connect-app
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3001"]
+      test: [ "CMD", "lsof", "-t", "-i:3001" ]
       timeout: 10s
       retries: 5
 
@@ -50,10 +53,11 @@ services:
       POSTGRES_DB: database
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-    networks: 
+    networks:
       - connect-app
-    healthcheck: # I will not put interval because my pc is weak
-      test: ["CMD-SHELL", "pg_isready"]
+    healthcheck:
+      # I will not put interval because my pc is weak
+      test: [ "CMD-SHELL", "pg_isready" ]
       timeout: 10s
       retries: 5
     restart: always
